@@ -37,3 +37,10 @@ Remainders are normalised into `[0, modulus)` before solving, so negative remain
 - `lcm(a, b)` — least common multiple of two `bigint` values.
 - `modInverse(a, m)` — inverse of `a` modulo `m` in `[0, m)`. Throws `RangeError` when no inverse exists.
 - `validateSystem(system)` — returns `{ ok, coprime, product, reason }` without throwing.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
